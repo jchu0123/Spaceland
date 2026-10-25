@@ -1,0 +1,148 @@
+{
+  "planets": [
+    {
+      "name": "Mercury",
+      "facts": {
+        "position": "1st from the Sun",
+        "classification": "Terrestrial planet",
+        "diameter_km": 4879,
+        "mean_solar_distance_au": 0.39,
+        "orbital_period_earth_days": 87.97,
+        "rotation_period": "58.6 Earth days",
+        "axial_tilt": "0.034 degrees",
+        "reference_gravity": "3.70 m/s^2",
+        "known_moons": 0,
+        "rings": "None known",
+        "atmosphere": "A very thin exosphere, including oxygen, sodium, hydrogen, helium, and potassium.",
+        "signature_fact": "A Mercury solar day (sunrise to sunrise) lasts about 176 Earth days."
+      },
+      "source_url": "https://science.nasa.gov/mercury/facts/"
+    },
+    {
+      "name": "Venus",
+      "facts": {
+        "position": "2nd from the Sun",
+        "classification": "Terrestrial planet",
+        "diameter_km": 12104,
+        "mean_solar_distance_au": 0.72,
+        "orbital_period_earth_days": 224.7,
+        "rotation_period": "243 Earth days, retrograde",
+        "axial_tilt": "About 3 degrees; it rotates in the opposite direction to most planets",
+        "reference_gravity": "8.87 m/s^2",
+        "known_moons": 0,
+        "rings": "None known",
+        "atmosphere": "Mostly carbon dioxide, with clouds of sulfuric acid.",
+        "signature_fact": "Venus is the hottest planet; its surface is about 467 degrees Celsius."
+      },
+      "source_url": "https://science.nasa.gov/venus/venus-facts/"
+    },
+    {
+      "name": "Earth",
+      "facts": {
+        "position": "3rd from the Sun",
+        "classification": "Terrestrial planet",
+        "diameter_km": 12756,
+        "mean_solar_distance_au": 1.0,
+        "orbital_period_earth_days": 365.25,
+        "rotation_period": "23.9 hours",
+        "axial_tilt": "23.4 degrees",
+        "reference_gravity": "9.81 m/s^2",
+        "known_moons": 1,
+        "rings": "None",
+        "atmosphere": "About 78% nitrogen, 21% oxygen, and 1% other gases.",
+        "signature_fact": "Earth is the only world currently known to have abundant life and stable liquid water on its surface."
+      },
+      "source_url": "https://science.nasa.gov/earth/facts/"
+    },
+    {
+      "name": "Mars",
+      "facts": {
+        "position": "4th from the Sun",
+        "classification": "Terrestrial planet",
+        "diameter_km": 6792,
+        "mean_solar_distance_au": 1.52,
+        "orbital_period_earth_days": 687.0,
+        "rotation_period": "24.6 hours",
+        "axial_tilt": "About 25 degrees",
+        "reference_gravity": "3.71 m/s^2",
+        "known_moons": 2,
+        "rings": "None known",
+        "atmosphere": "Thin; mostly carbon dioxide, with nitrogen and argon.",
+        "signature_fact": "Olympus Mons on Mars is the largest volcano in the solar system."
+      },
+      "source_url": "https://science.nasa.gov/mars/facts/"
+    },
+    {
+      "name": "Jupiter",
+      "facts": {
+        "position": "5th from the Sun",
+        "classification": "Gas giant",
+        "diameter_km": 139822,
+        "mean_solar_distance_au": 5.2,
+        "orbital_period_earth_days": 4333.0,
+        "rotation_period": "9.9 hours",
+        "axial_tilt": "About 3 degrees",
+        "reference_gravity": "24.79 m/s^2 at the 1-bar level",
+        "known_moons": 115,
+        "rings": "A faint, dusty ring system",
+        "atmosphere": "Mostly hydrogen and helium, with ammonia and water clouds.",
+        "signature_fact": "The Great Red Spot is a giant storm that has been observed for centuries."
+      },
+      "source_url": "https://science.nasa.gov/jupiter/facts/"
+    },
+    {
+      "name": "Saturn",
+      "facts": {
+        "position": "6th from the Sun",
+        "classification": "Gas giant",
+        "diameter_km": 120536,
+        "mean_solar_distance_au": 9.58,
+        "orbital_period_earth_days": 10759.0,
+        "rotation_period": "10.7 hours",
+        "axial_tilt": "26.7 degrees",
+        "reference_gravity": "10.44 m/s^2 at the 1-bar level",
+        "known_moons": 274,
+        "rings": "A broad system of rings made mostly of ice and rock",
+        "atmosphere": "Mostly hydrogen and helium.",
+        "signature_fact": "A persistent six-sided jet stream circles Saturn's north pole."
+      },
+      "source_url": "https://science.nasa.gov/saturn/facts/"
+    },
+    {
+      "name": "Uranus",
+      "facts": {
+        "position": "7th from the Sun",
+        "classification": "Ice giant",
+        "diameter_km": 51118,
+        "mean_solar_distance_au": 19.2,
+        "orbital_period_earth_days": 30687.0,
+        "rotation_period": "17.2 hours, retrograde",
+        "axial_tilt": "97.8 degrees; it rotates nearly on its side",
+        "reference_gravity": "8.69 m/s^2 at the 1-bar level",
+        "known_moons": 28,
+        "rings": "13 known, faint rings",
+        "atmosphere": "Mostly hydrogen and helium, with methane and traces of water and ammonia.",
+        "signature_fact": "Uranus's extreme axial tilt gives it seasons that last about 21 years."
+      },
+      "source_url": "https://science.nasa.gov/uranus/facts/"
+    },
+    {
+      "name": "Neptune",
+      "facts": {
+        "position": "8th from the Sun",
+        "classification": "Ice giant",
+        "diameter_km": 49528,
+        "mean_solar_distance_au": 30.05,
+        "orbital_period_earth_days": 60190.0,
+        "rotation_period": "16.1 hours",
+        "axial_tilt": "About 28 degrees",
+        "reference_gravity": "11.15 m/s^2 at the 1-bar level",
+        "known_moons": 16,
+        "rings": "At least five main rings and four prominent ring arcs",
+        "atmosphere": "Mostly hydrogen and helium, with a small amount of methane.",
+        "signature_fact": "Neptune has supersonic winds that can exceed 2,000 kilometers per hour."
+      },
+      "source_url": "https://science.nasa.gov/neptune/facts/"
+    }
+  ]
+}
