@@ -14,7 +14,19 @@
         "known_moons": 0,
         "rings": "No rings",
         "atmosphere": "Layers include the photosphere, chromosphere, and corona",
-        "signature_fact": "Nuclear fusion in its core converts hydrogen into helium and releases the light and heat that power life on Earth."
+        "signature_fact": "Nuclear fusion in its core converts hydrogen into helium and releases the light and heat that power life on Earth.",
+        "mass_kg": "1.989 x 10^30 kg",
+        "density_g_cm3": "About 1.41 g/cm^3 on average",
+        "surface_temperature_c": "Visible photosphere is about 5,500 degrees Celsius; the corona is much hotter",
+        "composition": "About 74% hydrogen and 24% helium by mass, with small amounts of heavier elements",
+        "surface_features": "A roiling plasma surface with sunspots, granules, prominences, and coronal loops",
+        "magnetic_field": "A changing magnetic field that reverses polarity roughly every 11 years",
+        "escape_velocity_km_s": "About 618 km/s at the visible surface",
+        "discovery": "Known since prehistory; its nature as a star became clear through centuries of astronomy",
+        "exploration": "Studied by observatories and spacecraft including SOHO, Parker Solar Probe, and Solar Orbiter",
+        "water": "No liquid water; the Sun is hot plasma, not a solid world",
+        "weather": "Solar flares and coronal mass ejections release energy and charged particles into space",
+        "formation_age": "Formed about 4.6 billion years ago from a collapsing cloud of gas and dust"
       },
       "source_url": "https://science.nasa.gov/sun/facts/"
     },
@@ -32,7 +44,19 @@
         "known_moons": 0,
         "rings": "No rings",
         "atmosphere": "An extremely thin exosphere, not breathable air",
-        "signature_fact": "The Moon is slowly moving away from Earth, by about 3.8 centimeters each year."
+        "signature_fact": "The Moon is slowly moving away from Earth, by about 3.8 centimeters each year.",
+        "mass_kg": "7.35 x 10^22 kg",
+        "density_g_cm3": "3.34 g/cm^3",
+        "surface_temperature_c": "About -173 degrees Celsius at night to 127 degrees Celsius in daylight",
+        "composition": "Silicate rock with a small iron-rich core",
+        "surface_features": "Impact craters, ancient lava plains called maria, mountains, and permanently shadowed polar regions",
+        "magnetic_field": "No global magnetic field today, though some crustal rocks are locally magnetized",
+        "escape_velocity_km_s": "2.38 km/s",
+        "discovery": "Earth's natural companion, observed since prehistory",
+        "exploration": "Visited by robotic missions and astronauts; Apollo 11 first landed people there in 1969",
+        "water": "Water ice occurs in some permanently shadowed polar craters",
+        "weather": "No ordinary weather; the surface is exposed to vacuum, radiation, and micrometeorites",
+        "formation_age": "Formed about 4.5 billion years ago, likely after a large impact with early Earth"
       },
       "source_url": "https://science.nasa.gov/moon/facts/"
     }

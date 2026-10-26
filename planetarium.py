@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parent
 DATA_PATH = ROOT / "data" / "planets.json"
 SOLAR_BODIES_PATH = ROOT / "data" / "solar_bodies.json"
 DRIVER_PATH = ROOT / "jdbc" / "ndp-jdbc-driver-2.4.3.1-7eff043-driver.jar"
-FACT_KEYS = (
+DATABASE_FACT_KEYS = (
     "position",
     "classification",
     "diameter_km",
@@ -33,6 +33,21 @@ FACT_KEYS = (
     "atmosphere",
     "signature_fact",
 )
+ADDITIONAL_FACT_KEYS = (
+    "mass_kg",
+    "density_g_cm3",
+    "surface_temperature_c",
+    "composition",
+    "surface_features",
+    "magnetic_field",
+    "escape_velocity_km_s",
+    "discovery",
+    "exploration",
+    "water",
+    "weather",
+    "formation_age",
+)
+FACT_KEYS = DATABASE_FACT_KEYS + ADDITIONAL_FACT_KEYS
 FACT_LABELS = {
     "position": "Position",
     "classification": "Class",
@@ -46,20 +61,44 @@ FACT_LABELS = {
     "rings": "Rings",
     "atmosphere": "Atmosphere",
     "signature_fact": "Notable fact",
+    "mass_kg": "Mass",
+    "density_g_cm3": "Average density",
+    "surface_temperature_c": "Temperature",
+    "composition": "What it is made of",
+    "surface_features": "Features",
+    "magnetic_field": "Magnetic field",
+    "escape_velocity_km_s": "Escape velocity",
+    "discovery": "Discovery",
+    "exploration": "Exploration",
+    "water": "Water",
+    "weather": "Weather and activity",
+    "formation_age": "Formation",
 }
 FIELD_TERMS = {
-    "position": ("order", "position", "from the sun"),
-    "classification": ("type", "class", "terrestrial", "ice giant", "gas giant"),
-    "diameter_km": ("diameter", "wide", "size"),
-    "mean_solar_distance_au": ("distance", "far from the sun", "how far"),
-    "orbital_period_earth_days": ("orbit", "year", "orbital period"),
+    "position": ("order", "position", "from the sun", "where is"),
+    "classification": ("type", "class", "classification", "terrestrial", "ice giant", "gas giant"),
+    "diameter_km": ("diameter", "wide", "size", "how big"),
+    "mean_solar_distance_au": ("distance", "far from the sun", "how far", "how distant"),
+    "orbital_period_earth_days": ("orbit", "year", "orbital period", "revolution"),
     "rotation_period": ("rotation", "spin", "day length", "how long is a day"),
     "axial_tilt": ("tilt", "sideways", "seasons"),
-    "reference_gravity": ("gravity", "weight"),
-    "known_moons": ("moon", "moons", "satellite"),
+    "reference_gravity": ("gravity", "weight", "g force"),
+    "known_moons": ("known moons", "moons", "moon count", "number of moons", "satellites"),
     "rings": ("ring", "rings"),
     "atmosphere": ("atmosphere", "air", "clouds", "gases"),
     "signature_fact": ("interesting fact", "notable fact", "special fact", "signature fact", "cool fact"),
+    "mass_kg": ("mass", "how heavy", "weighs"),
+    "density_g_cm3": ("density", "dense"),
+    "surface_temperature_c": ("temperature", "temp", "hot", "cold", "heat"),
+    "composition": ("composition", "made of", "made from", "ingredients"),
+    "surface_features": ("surface features", "surface", "terrain", "craters", "volcanoes", "landforms"),
+    "magnetic_field": ("magnetic field", "magnetism", "magnetic"),
+    "escape_velocity_km_s": ("escape velocity", "escape speed"),
+    "discovery": ("discovery", "discovered", "who found", "known since"),
+    "exploration": ("exploration", "spacecraft", "mission", "missions", "visited"),
+    "water": ("water", "ice", "ocean", "oceans", "liquid"),
+    "weather": ("weather", "storm", "storms", "winds", "wind"),
+    "formation_age": ("formation", "formed", "how old", "age", "origin"),
 }
 
 
@@ -130,7 +169,7 @@ class ZetarisClient:
         connection = self.connect()
         if connection is None:
             return None
-        columns = ("planet_name",) + FACT_KEYS + ("source_url",)
+        columns = ("planet_name",) + DATABASE_FACT_KEYS + ("source_url",)
         sql = (
             "SELECT "
             + ", ".join(columns)
@@ -145,7 +184,7 @@ class ZetarisClient:
                 return None
             return {
                 "name": row[0],
-                "facts": dict(zip(FACT_KEYS, row[1 : 1 + len(FACT_KEYS)])),
+                "facts": dict(zip(DATABASE_FACT_KEYS, row[1 : 1 + len(DATABASE_FACT_KEYS)])),
                 "source_url": row[-1],
             }
         finally:
@@ -254,7 +293,11 @@ class PlanetariumAgent:
         except Exception as error:
             print(f"Zetaris unavailable; using bundled catalog ({type(error).__name__}).", file=sys.stderr)
             stored = None
-        return stored or self.local_by_name[name.casefold()]
+        if stored is None:
+            return self.local_by_name[name.casefold()]
+        merged = dict(self.local_by_name[name.casefold()])
+        merged["facts"] = {**merged["facts"], **stored["facts"]}
+        return merged
 
     @staticmethod
     def _format_planet(planet: dict[str, Any], selected_field: str | None = None) -> str:
@@ -283,8 +326,10 @@ class PlanetariumAgent:
                 (
                     field
                     for field, terms in FIELD_TERMS.items()
-                    if not (records[0]["name"] == "Moon" and field == "known_moons")
-                    and any(term in lowered for term in terms)
+                    if any(
+                        re.search(rf"(?<!\w){re.escape(term)}(?!\w)", lowered)
+                        for term in terms
+                    )
                 ),
                 None,
             )

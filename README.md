@@ -1,6 +1,6 @@
 # Spaceland Planetarium Guide
 
-A small Python planetarium guide with a space-themed web interface. Visitors can explore the Sun, all eight planets, and the Moon, each with 12 NASA-sourced facts, or ask the guide questions and compare worlds. It can use Zetaris Lightning as a fact store and Meterless as an optional local language-model endpoint. The bundled catalogs keep answers available when either service is offline.
+A small Python planetarium guide with a space-themed web interface. Visitors can explore the Sun, all eight planets, and the Moon, each with 24 NASA-sourced facts, or ask the guide questions and compare worlds. It can use Zetaris Lightning as a fact store and Meterless as an optional local language-model endpoint. The bundled catalogs keep answers available when either service is offline.
 
 ## Run it
 
@@ -33,7 +33,7 @@ python planetarium.py --ask "What is Saturn's atmosphere like?"
 python planetarium.py --ask "Give me facts about all planets"
 ```
 
-The interactive prompt accepts the same questions. Every object card has 12 facts: position, classification, diameter, distance, orbital period, rotation period, axial tilt, reference gravity, known moons, rings, atmosphere, and a notable fact. Moon counts reflect the cited NASA pages and may change as discoveries are confirmed. Gas-giant gravity is labeled at the 1-bar level. The Sun and Moon facts are stored in `data/solar_bodies.json`; planet facts remain in `data/planets.json`.
+The interactive prompt accepts the same questions. Every object card has 24 facts, covering orbital and physical properties, temperature, composition, surface features, magnetic fields, exploration, water, and weather. Short questions such as `saturn's rings`, `earth gravity`, or `Jupiter moons` select the matching fact; broader questions show the full card. Moon counts reflect the cited NASA pages and may change as discoveries are confirmed. Gas-giant gravity is labeled at the 1-bar level. The Sun and Moon facts are stored in `data/solar_bodies.json`; planet facts remain in `data/planets.json`.
 
 ## Zetaris Lightning
 
@@ -45,7 +45,7 @@ To create and seed the optional `planetarium_facts` table:
 python seed_zetaris.py
 ```
 
-The seeder creates the table if needed, skips existing planet rows, and sends one SQL statement per JDBC `execute` call. The assistant reads rows with a parameterized `SELECT`; if the database or table is unavailable, it uses the bundled NASA catalog instead. The seeder does not delete or overwrite existing rows.
+The seeder creates the table if needed, skips existing planet rows, and sends one SQL statement per JDBC `execute` call. Zetaris stores the original 12 database columns; the assistant merges those records with the expanded bundled catalog so the full 24 facts remain available without a database migration. It reads rows with a parameterized `SELECT`; if the database or table is unavailable, it uses the bundled NASA catalog instead. The seeder does not delete or overwrite existing rows.
 
 ## Meterless and NVIDIA
 
@@ -61,7 +61,7 @@ On Windows with an NVIDIA GPU, Meterless Nightshift can use its CUDA-backed loca
 python -m unittest discover -s tests -v
 ```
 
-Tests cover the eight-planet catalog, the Sun and Moon, 12 facts per object, intent routing, source links, and operation without Zetaris or Meterless.
+Tests cover the eight-planet catalog, the Sun and Moon, 24 facts per object, concise fact queries, intent routing, source links, and operation without Zetaris or Meterless.
 
 ## Fact sources
 

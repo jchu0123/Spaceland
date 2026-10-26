@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 
-from planetarium import DATA_PATH, FACT_KEYS, ZetarisClient
+from planetarium import DATA_PATH, DATABASE_FACT_KEYS, ZetarisClient
 
 CREATE_TABLE_SQL = """CREATE TABLE planetarium_facts (
     planet_name VARCHAR(32) PRIMARY KEY,
@@ -43,14 +43,16 @@ def seed() -> None:
             cursor.execute("SELECT planet_name FROM planetarium_facts WHERE planet_name = ?", ("Mercury",))
             cursor.fetchone()
 
-        columns = ("planet_name",) + FACT_KEYS + ("source_url",)
+        columns = ("planet_name",) + DATABASE_FACT_KEYS + ("source_url",)
         placeholders = ", ".join("?" for _ in columns)
         insert_sql = f"INSERT INTO planetarium_facts ({', '.join(columns)}) VALUES ({placeholders})"
         for planet in planets:
             cursor.execute("SELECT planet_name FROM planetarium_facts WHERE planet_name = ?", (planet["name"],))
             if cursor.fetchone() is not None:
                 continue
-            values = [planet["name"]] + [str(planet["facts"][key]) for key in FACT_KEYS] + [planet["source_url"]]
+            values = [planet["name"]] + [
+                str(planet["facts"][key]) for key in DATABASE_FACT_KEYS
+            ] + [planet["source_url"]]
             cursor.execute(insert_sql, tuple(values))
         connection.commit()
         cursor.close()

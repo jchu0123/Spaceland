@@ -14,7 +14,19 @@
         "known_moons": 0,
         "rings": "None known",
         "atmosphere": "A very thin exosphere, including oxygen, sodium, hydrogen, helium, and potassium.",
-        "signature_fact": "A Mercury solar day (sunrise to sunrise) lasts about 176 Earth days."
+        "signature_fact": "A Mercury solar day (sunrise to sunrise) lasts about 176 Earth days.",
+        "mass_kg": "3.30 x 10^23 kg",
+        "density_g_cm3": "5.43 g/cm^3",
+        "surface_temperature_c": "About -180 to 430 degrees Celsius",
+        "composition": "A large iron-rich core beneath a rocky mantle and crust",
+        "surface_features": "Ancient impact craters, cliffs, and broad smooth plains",
+        "magnetic_field": "A global magnetic field, about 1% as strong as Earth's at the surface",
+        "escape_velocity_km_s": "4.25 km/s",
+        "discovery": "Known since antiquity and visible to the unaided eye",
+        "exploration": "Visited by Mariner 10 and studied in orbit by NASA's MESSENGER spacecraft",
+        "water": "Water ice is present in permanently shadowed polar craters",
+        "weather": "No conventional weather; the nearly airless surface experiences extreme heating and cooling",
+        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system"
       },
       "source_url": "https://science.nasa.gov/mercury/facts/"
     },
@@ -32,7 +44,19 @@
         "known_moons": 0,
         "rings": "None known",
         "atmosphere": "Mostly carbon dioxide, with clouds of sulfuric acid.",
-        "signature_fact": "Venus is the hottest planet; its surface is about 467 degrees Celsius."
+        "signature_fact": "Venus is the hottest planet; its surface is about 467 degrees Celsius.",
+        "mass_kg": "4.87 x 10^24 kg",
+        "density_g_cm3": "5.24 g/cm^3",
+        "surface_temperature_c": "About 465 degrees Celsius on average",
+        "composition": "A rocky iron core, rocky mantle, and basaltic crust",
+        "surface_features": "Volcanic plains, vast highlands, and impact craters",
+        "magnetic_field": "No intrinsic global magnetic field; the solar wind induces one in the upper atmosphere",
+        "escape_velocity_km_s": "10.36 km/s",
+        "discovery": "Known since antiquity and visible to the unaided eye",
+        "exploration": "Visited by many spacecraft, including NASA's Magellan radar mapper",
+        "water": "No stable surface liquid water; the atmosphere contains only trace amounts",
+        "weather": "Sulfuric-acid clouds and high-altitude winds circle the planet",
+        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system"
       },
       "source_url": "https://science.nasa.gov/venus/venus-facts/"
     },
@@ -50,7 +74,19 @@
         "known_moons": 1,
         "rings": "None",
         "atmosphere": "About 78% nitrogen, 21% oxygen, and 1% other gases.",
-        "signature_fact": "Earth is the only world currently known to have abundant life and stable liquid water on its surface."
+        "signature_fact": "Earth is the only world currently known to have abundant life and stable liquid water on its surface.",
+        "mass_kg": "5.97 x 10^24 kg",
+        "density_g_cm3": "5.51 g/cm^3",
+        "surface_temperature_c": "Global average about 15 degrees Celsius; local temperatures vary widely",
+        "composition": "A metallic iron-nickel core, rocky mantle, and thin crust",
+        "surface_features": "Oceans, continents, mountain ranges, plains, and deep ocean basins",
+        "magnetic_field": "A global magnetic field generated mainly by motion in the liquid outer core",
+        "escape_velocity_km_s": "11.19 km/s",
+        "discovery": "Our home world, known to humans since prehistory",
+        "exploration": "Continuously observed by satellites; humans have explored the surface and Moon missions began from here",
+        "water": "About 71% of the surface is covered by liquid water",
+        "weather": "An active atmosphere produces clouds, rain, snow, storms, and winds",
+        "formation_age": "Formed about 4.5 billion years ago; the oldest known evidence of life is over 3.5 billion years old"
       },
       "source_url": "https://science.nasa.gov/earth/facts/"
     },
@@ -68,7 +104,19 @@
         "known_moons": 2,
         "rings": "None known",
         "atmosphere": "Thin; mostly carbon dioxide, with nitrogen and argon.",
-        "signature_fact": "Olympus Mons on Mars is the largest volcano in the solar system."
+        "signature_fact": "Olympus Mons on Mars is the largest volcano in the solar system.",
+        "mass_kg": "6.42 x 10^23 kg",
+        "density_g_cm3": "3.93 g/cm^3",
+        "surface_temperature_c": "About -125 to 20 degrees Celsius",
+        "composition": "A metallic core beneath a rocky mantle and basalt-rich crust",
+        "surface_features": "Volcanoes, impact craters, ancient river valleys, and polar ice caps",
+        "magnetic_field": "No global magnetic field today; ancient crustal rocks preserve local magnetism",
+        "escape_velocity_km_s": "5.03 km/s",
+        "discovery": "Known since antiquity and visible to the unaided eye",
+        "exploration": "Studied by orbiters, landers, and rovers, including NASA's Perseverance rover",
+        "water": "Water ice exists at the poles and underground; ancient surface features record flowing water",
+        "weather": "Dust devils and planet-wide dust storms occur in its thin atmosphere",
+        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system"
       },
       "source_url": "https://science.nasa.gov/mars/facts/"
     },
@@ -86,7 +134,19 @@
         "known_moons": 115,
         "rings": "A faint, dusty ring system",
         "atmosphere": "Mostly hydrogen and helium, with ammonia and water clouds.",
-        "signature_fact": "The Great Red Spot is a giant storm that has been observed for centuries."
+        "signature_fact": "The Great Red Spot is a giant storm that has been observed for centuries.",
+        "mass_kg": "1.90 x 10^27 kg",
+        "density_g_cm3": "1.33 g/cm^3",
+        "surface_temperature_c": "Cloud tops average about -110 degrees Celsius",
+        "composition": "Mostly hydrogen and helium, with a likely dense core of heavier materials",
+        "surface_features": "No solid surface; colorful cloud bands and giant atmospheric storms",
+        "magnetic_field": "The strongest planetary magnetic field in the solar system",
+        "escape_velocity_km_s": "About 59.5 km/s at the cloud tops",
+        "discovery": "Known since antiquity and visible to the unaided eye",
+        "exploration": "Visited by Pioneer, Voyager, Galileo, and Juno spacecraft",
+        "water": "Water is present deep in the atmosphere, but its total abundance is still being studied",
+        "weather": "Powerful jet streams, lightning, and long-lived storms shape the cloud bands",
+        "formation_age": "Formed about 4.5 billion years ago; its early growth helped shape the outer solar system"
       },
       "source_url": "https://science.nasa.gov/jupiter/facts/"
     },
@@ -104,7 +164,19 @@
         "known_moons": 274,
         "rings": "A broad system of rings made mostly of ice and rock",
         "atmosphere": "Mostly hydrogen and helium.",
-        "signature_fact": "A persistent six-sided jet stream circles Saturn's north pole."
+        "signature_fact": "A persistent six-sided jet stream circles Saturn's north pole.",
+        "mass_kg": "5.68 x 10^26 kg",
+        "density_g_cm3": "0.69 g/cm^3",
+        "surface_temperature_c": "Cloud tops average about -140 degrees Celsius",
+        "composition": "Mostly hydrogen and helium surrounding a dense core of heavier elements",
+        "surface_features": "No solid surface; layered clouds, high-speed winds, and polar storms",
+        "magnetic_field": "A powerful global magnetic field, unusually aligned with its rotation axis",
+        "escape_velocity_km_s": "About 35.5 km/s at the cloud tops",
+        "discovery": "Known since antiquity; named for the Roman god of agriculture",
+        "exploration": "Studied up close by Pioneer 11, Voyager 1 and 2, and the Cassini-Huygens mission",
+        "water": "Water ice is abundant in the rings; water also occurs in moons and deep atmospheric clouds",
+        "weather": "Fast winds, enormous storms, and a long-lived hexagonal jet stream at the north pole",
+        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system"
       },
       "source_url": "https://science.nasa.gov/saturn/facts/"
     },
@@ -122,7 +194,19 @@
         "known_moons": 28,
         "rings": "13 known, faint rings",
         "atmosphere": "Mostly hydrogen and helium, with methane and traces of water and ammonia.",
-        "signature_fact": "Uranus's extreme axial tilt gives it seasons that last about 21 years."
+        "signature_fact": "Uranus's extreme axial tilt gives it seasons that last about 21 years.",
+        "mass_kg": "8.68 x 10^25 kg",
+        "density_g_cm3": "1.27 g/cm^3",
+        "surface_temperature_c": "Cloud tops average about -195 degrees Celsius",
+        "composition": "An ice-giant interior rich in water, methane, and ammonia beneath hydrogen-helium clouds",
+        "surface_features": "No solid surface; a blue-green atmosphere with faint cloud bands",
+        "magnetic_field": "Strongly tilted and offset from the planet's center",
+        "escape_velocity_km_s": "About 21.3 km/s at the cloud tops",
+        "discovery": "Discovered by William Herschel in 1781, the first planet found with a telescope",
+        "exploration": "Voyager 2 is the only spacecraft to have flown past Uranus",
+        "water": "Water is expected deep inside its ice-rich interior; no liquid surface oceans are known",
+        "weather": "Very cold atmosphere with methane clouds and seasonal storms",
+        "formation_age": "Formed about 4.5 billion years ago; it may have been knocked onto its side early in its history"
       },
       "source_url": "https://science.nasa.gov/uranus/facts/"
     },
@@ -140,7 +224,19 @@
         "known_moons": 16,
         "rings": "At least five main rings and four prominent ring arcs",
         "atmosphere": "Mostly hydrogen and helium, with a small amount of methane.",
-        "signature_fact": "Neptune has supersonic winds that can exceed 2,000 kilometers per hour."
+        "signature_fact": "Neptune has supersonic winds that can exceed 2,000 kilometers per hour.",
+        "mass_kg": "1.02 x 10^26 kg",
+        "density_g_cm3": "1.64 g/cm^3",
+        "surface_temperature_c": "Cloud tops average about -200 degrees Celsius",
+        "composition": "An ice-giant interior rich in water, methane, and ammonia beneath hydrogen-helium clouds",
+        "surface_features": "No solid surface; dynamic blue clouds, dark vortices, and faint rings",
+        "magnetic_field": "Tilted and offset from the planet's center, like Uranus's field",
+        "escape_velocity_km_s": "About 23.5 km/s at the cloud tops",
+        "discovery": "Predicted mathematically and observed in 1846",
+        "exploration": "Voyager 2 is the only spacecraft to have flown past Neptune",
+        "water": "Water is expected deep inside its ice-rich interior; no liquid surface oceans are known",
+        "weather": "The atmosphere has the fastest measured planetary winds in the solar system",
+        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system"
       },
       "source_url": "https://science.nasa.gov/neptune/facts/"
     }
