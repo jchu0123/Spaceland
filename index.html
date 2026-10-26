@@ -250,7 +250,7 @@
         </div>
         <div class="fact-heading">
           <h3>Things to know</h3>
-          <span id="fact-count" class="fact-count">24 discoveries</span>
+          <span id="fact-count" class="fact-count">30 discoveries</span>
         </div>
         <div id="facts-grid" class="facts-grid" aria-live="polite"></div>
         <div id="source-row" class="source-row"></div>
@@ -265,13 +265,13 @@
               <div class="guide-status"><span class="live-dot" aria-hidden="true"></span> Here for your questions</div>
             </div>
           </div>
-          <p class="guide-intro">There are no silly questions under the stars. Ask about a world, compare two planets, or ask for a fun fact.</p>
+          <p class="guide-intro">There are no silly questions under the stars. Ask about a world, compare any planets, the Sun, or the Moon by a trait, or ask for a fun fact.</p>
         </div>
         <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-relevant="additions">
           <div class="chat-bubble">Hello, stargazer! Pick a world on the sky map, then ask me what makes it special. You can also ask about the Sun or our Moon.</div>
         </div>
         <div class="suggestions" aria-label="Try asking">
-          <button class="suggestion" type="button" data-question="What makes Saturn's rings special?">Saturn's rings</button>
+          <button class="suggestion" type="button" data-question="Compare Earth and Mars by gravity">Earth vs. Mars gravity</button>
           <button class="suggestion" type="button" data-question="Tell me about the Moon">Our Moon</button>
           <button class="suggestion" type="button" data-question="How does the Sun shine?">The Sun</button>
         </div>
@@ -313,7 +313,13 @@
       exploration: "Exploration",
       water: "Water",
       weather: "Weather and activity",
-      formation_age: "Formation"
+      formation_age: "Formation",
+      equatorial_circumference_km: "Equatorial circumference (km)",
+      surface_area_km2: "Approximate surface area (km²)",
+      volume_km3: "Approximate volume (km³)",
+      orbital_eccentricity: "Orbital eccentricity",
+      orbital_inclination_degrees: "Orbital inclination",
+      orbital_speed_km_s: "Average orbital speed (km/s)"
     };
     const list = document.querySelector("#body-list");
     const factsGrid = document.querySelector("#facts-grid");

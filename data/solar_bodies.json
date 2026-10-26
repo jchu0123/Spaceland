@@ -26,7 +26,13 @@
         "exploration": "Studied by observatories and spacecraft including SOHO, Parker Solar Probe, and Solar Orbiter",
         "water": "No liquid water; the Sun is hot plasma, not a solid world",
         "weather": "Solar flares and coronal mass ejections release energy and charged particles into space",
-        "formation_age": "Formed about 4.6 billion years ago from a collapsing cloud of gas and dust"
+        "formation_age": "Formed about 4.6 billion years ago from a collapsing cloud of gas and dust",
+        "equatorial_circumference_km": 4375296,
+        "surface_area_km2": 6093474862669,
+        "volume_km3": 1414397073539882496,
+        "orbital_eccentricity": "Not applicable (the Sun does not orbit itself)",
+        "orbital_inclination_degrees": "Not applicable (the Sun does not orbit itself)",
+        "orbital_speed_km_s": "Not applicable (the Sun does not orbit itself)"
       },
       "source_url": "https://science.nasa.gov/sun/facts/"
     },
@@ -56,7 +62,13 @@
         "exploration": "Visited by robotic missions and astronauts; Apollo 11 first landed people there in 1969",
         "water": "Water ice occurs in some permanently shadowed polar craters",
         "weather": "No ordinary weather; the surface is exposed to vacuum, radiation, and micrometeorites",
-        "formation_age": "Formed about 4.5 billion years ago, likely after a large impact with early Earth"
+        "formation_age": "Formed about 4.5 billion years ago, likely after a large impact with early Earth",
+        "equatorial_circumference_km": 10917,
+        "surface_area_km2": 37936695,
+        "volume_km3": 21971669064,
+        "orbital_eccentricity": "0.0549",
+        "orbital_inclination_degrees": "5.145 degrees to the ecliptic",
+        "orbital_speed_km_s": "1.02 km/s around Earth"
       },
       "source_url": "https://science.nasa.gov/moon/facts/"
     }

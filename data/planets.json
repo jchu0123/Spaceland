@@ -26,7 +26,13 @@
         "exploration": "Visited by Mariner 10 and studied in orbit by NASA's MESSENGER spacecraft",
         "water": "Water ice is present in permanently shadowed polar craters",
         "weather": "No conventional weather; the nearly airless surface experiences extreme heating and cooling",
-        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system"
+        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system",
+        "equatorial_circumference_km": 15328,
+        "surface_area_km2": 74784485,
+        "volume_km3": 60812250619,
+        "orbital_eccentricity": "0.2056",
+        "orbital_inclination_degrees": "7.00 degrees to the ecliptic",
+        "orbital_speed_km_s": "47.4 km/s"
       },
       "source_url": "https://science.nasa.gov/mercury/facts/"
     },
@@ -56,7 +62,13 @@
         "exploration": "Visited by many spacecraft, including NASA's Magellan radar mapper",
         "water": "No stable surface liquid water; the atmosphere contains only trace amounts",
         "weather": "Sulfuric-acid clouds and high-altitude winds circle the planet",
-        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system"
+        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system",
+        "equatorial_circumference_km": 38026,
+        "surface_area_km2": 460264737,
+        "volume_km3": 928507395798,
+        "orbital_eccentricity": "0.0068",
+        "orbital_inclination_degrees": "3.39 degrees to the ecliptic",
+        "orbital_speed_km_s": "35.0 km/s"
       },
       "source_url": "https://science.nasa.gov/venus/venus-facts/"
     },
@@ -86,7 +98,13 @@
         "exploration": "Continuously observed by satellites; humans have explored the surface and Moon missions began from here",
         "water": "About 71% of the surface is covered by liquid water",
         "weather": "An active atmosphere produces clouds, rain, snow, storms, and winds",
-        "formation_age": "Formed about 4.5 billion years ago; the oldest known evidence of life is over 3.5 billion years old"
+        "formation_age": "Formed about 4.5 billion years ago; the oldest known evidence of life is over 3.5 billion years old",
+        "equatorial_circumference_km": 40074,
+        "surface_area_km2": 511185933,
+        "volume_km3": 1086781292543,
+        "orbital_eccentricity": "0.0167",
+        "orbital_inclination_degrees": "0 degrees (reference plane)",
+        "orbital_speed_km_s": "29.8 km/s"
       },
       "source_url": "https://science.nasa.gov/earth/facts/"
     },
@@ -116,7 +134,13 @@
         "exploration": "Studied by orbiters, landers, and rovers, including NASA's Perseverance rover",
         "water": "Water ice exists at the poles and underground; ancient surface features record flowing water",
         "weather": "Dust devils and planet-wide dust storms occur in its thin atmosphere",
-        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system"
+        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system",
+        "equatorial_circumference_km": 21338,
+        "surface_area_km2": 144925640,
+        "volume_km3": 164055824574,
+        "orbital_eccentricity": "0.0934",
+        "orbital_inclination_degrees": "1.85 degrees to the ecliptic",
+        "orbital_speed_km_s": "24.1 km/s"
       },
       "source_url": "https://science.nasa.gov/mars/facts/"
     },
@@ -146,7 +170,13 @@
         "exploration": "Visited by Pioneer, Voyager, Galileo, and Juno spacecraft",
         "water": "Water is present deep in the atmosphere, but its total abundance is still being studied",
         "weather": "Powerful jet streams, lightning, and long-lived storms shape the cloud bands",
-        "formation_age": "Formed about 4.5 billion years ago; its early growth helped shape the outer solar system"
+        "formation_age": "Formed about 4.5 billion years ago; its early growth helped shape the outer solar system",
+        "equatorial_circumference_km": 439264,
+        "surface_area_km2": 61418738571,
+        "volume_km3": 1431281810739357,
+        "orbital_eccentricity": "0.0489",
+        "orbital_inclination_degrees": "1.30 degrees to the ecliptic",
+        "orbital_speed_km_s": "13.1 km/s"
       },
       "source_url": "https://science.nasa.gov/jupiter/facts/"
     },
@@ -176,7 +206,13 @@
         "exploration": "Studied up close by Pioneer 11, Voyager 1 and 2, and the Cassini-Huygens mission",
         "water": "Water ice is abundant in the rings; water also occurs in moons and deep atmospheric clouds",
         "weather": "Fast winds, enormous storms, and a long-lived hexagonal jet stream at the north pole",
-        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system"
+        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system",
+        "equatorial_circumference_km": 378675,
+        "surface_area_km2": 45643971258,
+        "volume_km3": 916956953252093,
+        "orbital_eccentricity": "0.0565",
+        "orbital_inclination_degrees": "2.49 degrees to the ecliptic",
+        "orbital_speed_km_s": "9.7 km/s"
       },
       "source_url": "https://science.nasa.gov/saturn/facts/"
     },
@@ -206,7 +242,13 @@
         "exploration": "Voyager 2 is the only spacecraft to have flown past Uranus",
         "water": "Water is expected deep inside its ice-rich interior; no liquid surface oceans are known",
         "weather": "Very cold atmosphere with methane clouds and seasonal storms",
-        "formation_age": "Formed about 4.5 billion years ago; it may have been knocked onto its side early in its history"
+        "formation_age": "Formed about 4.5 billion years ago; it may have been knocked onto its side early in its history",
+        "equatorial_circumference_km": 160592,
+        "surface_area_km2": 8209138445,
+        "volume_km3": 69939123169377,
+        "orbital_eccentricity": "0.0463",
+        "orbital_inclination_degrees": "0.77 degrees to the ecliptic",
+        "orbital_speed_km_s": "6.8 km/s"
       },
       "source_url": "https://science.nasa.gov/uranus/facts/"
     },
@@ -236,7 +278,13 @@
         "exploration": "Voyager 2 is the only spacecraft to have flown past Neptune",
         "water": "Water is expected deep inside its ice-rich interior; no liquid surface oceans are known",
         "weather": "The atmosphere has the fastest measured planetary winds in the solar system",
-        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system"
+        "formation_age": "Formed about 4.5 billion years ago with the rest of the solar system",
+        "equatorial_circumference_km": 155597,
+        "surface_area_km2": 7706398357,
+        "volume_km3": 63613749640082,
+        "orbital_eccentricity": "0.0095",
+        "orbital_inclination_degrees": "1.77 degrees to the ecliptic",
+        "orbital_speed_km_s": "5.4 km/s"
       },
       "source_url": "https://science.nasa.gov/neptune/facts/"
     }

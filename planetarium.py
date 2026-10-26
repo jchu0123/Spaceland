@@ -46,6 +46,12 @@ ADDITIONAL_FACT_KEYS = (
     "water",
     "weather",
     "formation_age",
+    "equatorial_circumference_km",
+    "surface_area_km2",
+    "volume_km3",
+    "orbital_eccentricity",
+    "orbital_inclination_degrees",
+    "orbital_speed_km_s",
 )
 FACT_KEYS = DATABASE_FACT_KEYS + ADDITIONAL_FACT_KEYS
 FACT_LABELS = {
@@ -73,12 +79,18 @@ FACT_LABELS = {
     "water": "Water",
     "weather": "Weather and activity",
     "formation_age": "Formation",
+    "equatorial_circumference_km": "Equatorial circumference (km)",
+    "surface_area_km2": "Approximate surface area (km^2)",
+    "volume_km3": "Approximate volume (km^3)",
+    "orbital_eccentricity": "Orbital eccentricity",
+    "orbital_inclination_degrees": "Orbital inclination",
+    "orbital_speed_km_s": "Average orbital speed (km/s)",
 }
 FIELD_TERMS = {
-    "position": ("order", "position", "from the sun", "where is"),
+    "position": ("order", "position", "where is"),
     "classification": ("type", "class", "classification", "terrestrial", "ice giant", "gas giant"),
-    "diameter_km": ("diameter", "wide", "size", "how big"),
-    "mean_solar_distance_au": ("distance", "far from the sun", "how far", "how distant"),
+    "diameter_km": ("diameter", "wide", "size", "how big", "bigger", "larger", "smaller"),
+    "mean_solar_distance_au": ("distance", "far from the sun", "how far", "how distant", "farther"),
     "orbital_period_earth_days": ("orbit", "year", "orbital period", "revolution"),
     "rotation_period": ("rotation", "spin", "day length", "how long is a day"),
     "axial_tilt": ("tilt", "sideways", "seasons"),
@@ -87,9 +99,9 @@ FIELD_TERMS = {
     "rings": ("ring", "rings"),
     "atmosphere": ("atmosphere", "air", "clouds", "gases"),
     "signature_fact": ("interesting fact", "notable fact", "special fact", "signature fact", "cool fact"),
-    "mass_kg": ("mass", "how heavy", "weighs"),
+    "mass_kg": ("mass", "how heavy", "heavier", "weighs"),
     "density_g_cm3": ("density", "dense"),
-    "surface_temperature_c": ("temperature", "temp", "hot", "cold", "heat"),
+    "surface_temperature_c": ("temperature", "temp", "hot", "cold", "hotter", "colder", "warmer", "heat"),
     "composition": ("composition", "made of", "made from", "ingredients"),
     "surface_features": ("surface features", "surface", "terrain", "craters", "volcanoes", "landforms"),
     "magnetic_field": ("magnetic field", "magnetism", "magnetic"),
@@ -99,6 +111,12 @@ FIELD_TERMS = {
     "water": ("water", "ice", "ocean", "oceans", "liquid"),
     "weather": ("weather", "storm", "storms", "winds", "wind"),
     "formation_age": ("formation", "formed", "how old", "age", "origin"),
+    "equatorial_circumference_km": ("circumference", "around the equator"),
+    "surface_area_km2": ("surface area",),
+    "volume_km3": ("volume",),
+    "orbital_eccentricity": ("orbital eccentricity", "eccentricity", "orbit shape"),
+    "orbital_inclination_degrees": ("orbital inclination", "inclination"),
+    "orbital_speed_km_s": ("orbital speed", "orbital velocity", "orbit speed"),
 }
 
 
@@ -308,10 +326,25 @@ class PlanetariumAgent:
         lines.append(f"Source: {planet['source_url']}")
         return "\n".join(lines)
 
+    @staticmethod
+    def _selected_field(question: str) -> str | None:
+        lowered = question.casefold()
+        return next(
+            (
+                field
+                for field, terms in FIELD_TERMS.items()
+                if any(
+                    re.search(rf"(?<!\w){re.escape(term)}(?!\w)", lowered)
+                    for term in terms
+                )
+            ),
+            None,
+        )
+
     def answer(self, question: str) -> str:
         route = self.router.route(question)
         if route["intent"] == "clarify":
-            return "Ask about a planet, the Sun, or the Moon; compare planets; or request facts about all eight planets."
+            return "Ask about a planet, the Sun, or the Moon; compare any of them by a trait; or request facts about all eight planets."
         if route["intent"] == "list_planets":
             return "The eight planets, from the Sun outward: " + ", ".join(self.router.planet_names) + "."
 
@@ -319,20 +352,18 @@ class PlanetariumAgent:
         if route["intent"] == "all_planet_facts":
             grounded = "\n\n".join(self._format_planet(record) for record in records)
         elif route["intent"] == "compare_planets":
-            grounded = "\n\n".join(self._format_planet(record) for record in records)
+            selected_field = self._selected_field(question)
+            if selected_field:
+                label = FACT_LABELS[selected_field]
+                grounded = f"Comparing {label.casefold()}:\n" + "\n".join(
+                    f"- {record['name']}: {record['facts'][selected_field]} "
+                    f"(Source: {record['source_url']})"
+                    for record in records
+                )
+            else:
+                grounded = "\n\n".join(self._format_planet(record) for record in records)
         else:
-            lowered = question.casefold()
-            selected_field = next(
-                (
-                    field
-                    for field, terms in FIELD_TERMS.items()
-                    if any(
-                        re.search(rf"(?<!\w){re.escape(term)}(?!\w)", lowered)
-                        for term in terms
-                    )
-                ),
-                None,
-            )
+            selected_field = self._selected_field(question)
             grounded = self._format_planet(records[0], selected_field)
 
         generated = self.meterless.rephrase(question, grounded, records)

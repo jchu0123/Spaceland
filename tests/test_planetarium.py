@@ -16,7 +16,7 @@ class OfflineModel:
 
 
 class PlanetCatalogTests(unittest.TestCase):
-    def test_eight_planets_share_twenty_four_facts(self):
+    def test_eight_planets_share_thirty_facts(self):
         planets = load_planets()
         self.assertEqual(len(planets), 8)
         self.assertEqual([planet["name"] for planet in planets], [
@@ -24,7 +24,7 @@ class PlanetCatalogTests(unittest.TestCase):
         ])
         for planet in planets:
             self.assertEqual(set(planet["facts"]), set(FACT_KEYS), planet["name"])
-            self.assertEqual(len(planet["facts"]), 24, planet["name"])
+            self.assertEqual(len(planet["facts"]), 30, planet["name"])
             self.assertTrue(planet["source_url"].startswith("https://science.nasa.gov/"))
 
     def test_router_detects_single_compare_and_all_fact_intents(self):
@@ -38,7 +38,7 @@ class PlanetCatalogTests(unittest.TestCase):
         self.assertEqual({body["name"] for body in bodies}, {"Sun", "Moon"})
         for body in bodies:
             self.assertEqual(set(body["facts"]), set(FACT_KEYS), body["name"])
-            self.assertEqual(len(body["facts"]), 24, body["name"])
+            self.assertEqual(len(body["facts"]), 30, body["name"])
             self.assertTrue(body["source_url"].startswith("https://science.nasa.gov/"))
 
         router = ScoutIntentRouter(load_planets(), bodies)
@@ -46,13 +46,17 @@ class PlanetCatalogTests(unittest.TestCase):
         self.assertEqual(router.route("Tell me about the Moon")["planets"], ["Moon"])
         self.assertEqual(router.route("How far is Mercury from the Sun?")["planets"], ["Mercury"])
         self.assertEqual(len(router.route("List planets")["planets"]), 8)
+        self.assertEqual(
+            router.route("Compare the Sun, Earth, and Moon")["intent"],
+            "compare_planets",
+        )
 
-    def test_sun_and_moon_answers_include_all_twenty_four_facts(self):
+    def test_sun_and_moon_answers_include_all_thirty_facts(self):
         agent = PlanetariumAgent(zetaris=OfflineDatabase(), meterless=OfflineModel())
         for name in ("Sun", "Moon"):
             answer = agent.answer(f"Tell me about the {name}")
             self.assertIn("Notable fact", answer)
-            self.assertEqual(answer.count("\n- "), 24)
+            self.assertEqual(answer.count("\n- "), 30)
 
     def test_answers_work_without_zetaris_or_meterless(self):
         agent = PlanetariumAgent(zetaris=OfflineDatabase(), meterless=OfflineModel())
@@ -61,14 +65,39 @@ class PlanetCatalogTests(unittest.TestCase):
         self.assertIn("hydrogen and helium", answer)
         self.assertIn("science.nasa.gov/jupiter/facts/", answer)
 
-    def test_broad_planet_question_returns_all_twenty_four_facts(self):
+    def test_broad_planet_question_returns_all_thirty_facts(self):
         agent = PlanetariumAgent(zetaris=OfflineDatabase(), meterless=OfflineModel())
         answer = agent.answer("Tell me about Jupiter")
         self.assertIn("Atmosphere", answer)
         self.assertIn("Notable fact", answer)
         self.assertIn("Mean distance from the Sun", answer)
         self.assertIn("Magnetic field", answer)
-        self.assertEqual(answer.count("\n- "), 24)
+        self.assertEqual(answer.count("\n- "), 30)
+
+    def test_comparison_can_select_a_trait_for_two_or_more_bodies(self):
+        agent = PlanetariumAgent(zetaris=OfflineDatabase(), meterless=OfflineModel())
+        answer = agent.answer("Compare Earth, Mars, and the Moon by gravity")
+        self.assertIn("Comparing reference gravity", answer)
+        self.assertIn("Earth: 9.81 m/s^2", answer)
+        self.assertIn("Mars: 3.71 m/s^2", answer)
+        self.assertIn("Moon: 1.62 m/s^2", answer)
+        self.assertEqual(answer.count("Source:"), 3)
+
+        answer = agent.answer("Compare the Sun and Moon by diameter")
+        self.assertIn("Sun: 1392700", answer)
+        self.assertIn("Moon: 3475", answer)
+        self.assertEqual(answer.count("Source:"), 2)
+
+        answer = agent.answer("Which is larger, Earth or Mars?")
+        self.assertIn("Comparing equatorial diameter", answer)
+        self.assertIn("Earth: 12756", answer)
+        self.assertIn("Mars: 6792", answer)
+
+    def test_broad_comparison_includes_all_facts_for_sun_moon_and_planet(self):
+        agent = PlanetariumAgent(zetaris=OfflineDatabase(), meterless=OfflineModel())
+        answer = agent.answer("Compare the Sun, Earth, and Moon")
+        self.assertIn("Orbital eccentricity", answer)
+        self.assertIn("Equatorial circumference", answer)
 
     def test_short_field_queries_return_the_requested_fact(self):
         agent = PlanetariumAgent(zetaris=OfflineDatabase(), meterless=OfflineModel())
@@ -118,7 +147,9 @@ class VercelEntrypointTests(unittest.IsolatedAsyncioTestCase):
 
         status, body = await self.request("GET", "/api/catalog")
         self.assertEqual(status, 200)
-        self.assertEqual(len(json.loads(body)["bodies"]), 10)
+        catalog = json.loads(body)["bodies"]
+        self.assertEqual(len(catalog), 10)
+        self.assertTrue(all(len(item["facts"]) == 30 for item in catalog))
 
     async def test_question_route_and_invalid_request(self):
         status, body = await self.request(
