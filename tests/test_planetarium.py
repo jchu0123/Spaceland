@@ -1,6 +1,6 @@
 import unittest
 
-from planetarium import FACT_KEYS, PlanetariumAgent, ScoutIntentRouter, load_planets
+from planetarium import FACT_KEYS, PlanetariumAgent, ScoutIntentRouter, load_planets, load_solar_bodies
 
 
 class OfflineDatabase:
@@ -30,6 +30,27 @@ class PlanetCatalogTests(unittest.TestCase):
         self.assertEqual(router.route("Tell me about Jupiter")["intent"], "planet_facts")
         self.assertEqual(router.route("Compare Earth and Mars")["intent"], "compare_planets")
         self.assertEqual(router.route("Give me facts about all planets")["intent"], "all_planet_facts")
+
+    def test_sun_and_moon_each_have_twelve_facts_and_are_question_targets(self):
+        bodies = load_solar_bodies()
+        self.assertEqual({body["name"] for body in bodies}, {"Sun", "Moon"})
+        for body in bodies:
+            self.assertEqual(set(body["facts"]), set(FACT_KEYS), body["name"])
+            self.assertEqual(len(body["facts"]), 12, body["name"])
+            self.assertTrue(body["source_url"].startswith("https://science.nasa.gov/"))
+
+        router = ScoutIntentRouter(load_planets(), bodies)
+        self.assertEqual(router.route("How does the Sun shine?")["planets"], ["Sun"])
+        self.assertEqual(router.route("Tell me about the Moon")["planets"], ["Moon"])
+        self.assertEqual(router.route("How far is Mercury from the Sun?")["planets"], ["Mercury"])
+        self.assertEqual(len(router.route("List planets")["planets"]), 8)
+
+    def test_sun_and_moon_answers_include_all_twelve_facts(self):
+        agent = PlanetariumAgent(zetaris=OfflineDatabase(), meterless=OfflineModel())
+        for name in ("Sun", "Moon"):
+            answer = agent.answer(f"Tell me about the {name}")
+            self.assertIn("Notable fact", answer)
+            self.assertEqual(answer.count("\n- "), 12)
 
     def test_answers_work_without_zetaris_or_meterless(self):
         agent = PlanetariumAgent(zetaris=OfflineDatabase(), meterless=OfflineModel())

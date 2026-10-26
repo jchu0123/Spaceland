@@ -1,6 +1,6 @@
 # Spaceland Planetarium Guide
 
-A small Python assistant for planetarium visitors. It answers questions about all eight planets using one consistent set of 12 NASA-sourced facts per planet. It can use Zetaris Lightning as a fact store and Meterless as an optional local language-model endpoint. The bundled catalog keeps answers available when either service is offline.
+A small Python planetarium guide with a space-themed web interface. Visitors can explore the Sun, all eight planets, and the Moon, each with 12 NASA-sourced facts, or ask the guide questions and compare worlds. It can use Zetaris Lightning as a fact store and Meterless as an optional local language-model endpoint. The bundled catalogs keep answers available when either service is offline.
 
 ## Run it
 
@@ -11,10 +11,16 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 Copy-Item .env.example .env
+python planetarium.py --web
+```
+
+Open `http://127.0.0.1:8000` to explore the planetarium. The web server binds to localhost by default; use `--host` and `--port` to choose a different address. The original command-line guide is still available:
+
+```powershell
 python planetarium.py
 ```
 
-Example questions:
+Example command-line questions:
 
 ```powershell
 python planetarium.py --ask "Tell me about Jupiter"
@@ -23,7 +29,7 @@ python planetarium.py --ask "What is Saturn's atmosphere like?"
 python planetarium.py --ask "Give me facts about all planets"
 ```
 
-The interactive prompt accepts the same questions. Each planet card has 12 fields: position, classification, diameter, mean solar distance, orbital period, rotation period, axial tilt, reference gravity, known moons, rings, atmosphere, and a notable fact. Moon counts reflect the cited NASA pages and may change as discoveries are confirmed. Gas-giant gravity is labeled at the 1-bar level.
+The interactive prompt accepts the same questions. Every object card has 12 facts: position, classification, diameter, distance, orbital period, rotation period, axial tilt, reference gravity, known moons, rings, atmosphere, and a notable fact. Moon counts reflect the cited NASA pages and may change as discoveries are confirmed. Gas-giant gravity is labeled at the 1-bar level. The Sun and Moon facts are stored in `data/solar_bodies.json`; planet facts remain in `data/planets.json`.
 
 ## Zetaris Lightning
 
@@ -51,11 +57,13 @@ On Windows with an NVIDIA GPU, Meterless Nightshift can use its CUDA-backed loca
 python -m unittest discover -s tests -v
 ```
 
-Tests cover the eight-planet, 12-field catalog, intent routing, source links, and operation without Zetaris or Meterless.
+Tests cover the eight-planet catalog, the Sun and Moon, 12 facts per object, intent routing, source links, and operation without Zetaris or Meterless.
 
 ## Fact sources
 
 - [NASA Solar System planets](https://science.nasa.gov/solar-system/planets/)
+- [Sun](https://science.nasa.gov/sun/facts/)
+- [Moon](https://science.nasa.gov/moon/facts/)
 - [Mercury](https://science.nasa.gov/mercury/facts/)
 - [Venus](https://science.nasa.gov/venus/venus-facts/)
 - [Earth](https://science.nasa.gov/earth/facts/)

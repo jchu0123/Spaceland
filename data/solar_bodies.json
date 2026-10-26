@@ -1,0 +1,40 @@
+{
+  "bodies": [
+    {
+      "name": "Sun",
+      "facts": {
+        "position": "At the center of the solar system",
+        "classification": "G2 V main-sequence star",
+        "diameter_km": 1392700,
+        "mean_solar_distance_au": "0 AU (the reference point for solar distance)",
+        "orbital_period_earth_days": "About 225 million years around the center of the Milky Way",
+        "rotation_period": "About 25 days at the equator; the poles rotate more slowly",
+        "axial_tilt": "About 7.25 degrees relative to the plane of Earth's orbit",
+        "reference_gravity": "274 m/s^2 at the visible surface",
+        "known_moons": 0,
+        "rings": "No rings",
+        "atmosphere": "Layers include the photosphere, chromosphere, and corona",
+        "signature_fact": "Nuclear fusion in its core converts hydrogen into helium and releases the light and heat that power life on Earth."
+      },
+      "source_url": "https://science.nasa.gov/sun/facts/"
+    },
+    {
+      "name": "Moon",
+      "facts": {
+        "position": "Earth's natural satellite; Earth is the third planet from the Sun",
+        "classification": "Natural satellite",
+        "diameter_km": 3475,
+        "mean_solar_distance_au": "About 0.00257 AU from Earth (384,400 km on average)",
+        "orbital_period_earth_days": "27.3 days around Earth",
+        "rotation_period": "27.3 days; synchronous rotation keeps nearly the same side facing Earth",
+        "axial_tilt": "About 6.7 degrees relative to its orbital plane",
+        "reference_gravity": "1.62 m/s^2 at the surface",
+        "known_moons": 0,
+        "rings": "No rings",
+        "atmosphere": "An extremely thin exosphere, not breathable air",
+        "signature_fact": "The Moon is slowly moving away from Earth, by about 3.8 centimeters each year."
+      },
+      "source_url": "https://science.nasa.gov/moon/facts/"
+    }
+  ]
+}

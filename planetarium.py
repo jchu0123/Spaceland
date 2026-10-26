@@ -7,6 +7,7 @@ import os
 import re
 import shutil
 import sys
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError, URLError
@@ -16,6 +17,7 @@ from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parent
 DATA_PATH = ROOT / "data" / "planets.json"
+SOLAR_BODIES_PATH = ROOT / "data" / "solar_bodies.json"
 DRIVER_PATH = ROOT / "jdbc" / "ndp-jdbc-driver-2.4.3.1-7eff043-driver.jar"
 FACT_KEYS = (
     "position",
@@ -36,7 +38,7 @@ FACT_LABELS = {
     "classification": "Class",
     "diameter_km": "Equatorial diameter (km)",
     "mean_solar_distance_au": "Mean distance from the Sun (AU)",
-    "orbital_period_earth_days": "Orbital period (Earth days)",
+    "orbital_period_earth_days": "Orbital period",
     "rotation_period": "Rotation period",
     "axial_tilt": "Axial tilt",
     "reference_gravity": "Reference gravity",
@@ -70,6 +72,17 @@ def load_planets(path: Path = DATA_PATH) -> list[dict[str, Any]]:
     if len(planets) != 8:
         raise ValueError("The catalog must contain all eight solar-system planets")
     return planets
+
+
+def load_solar_bodies(path: Path = SOLAR_BODIES_PATH) -> list[dict[str, Any]]:
+    with path.open(encoding="utf-8") as data_file:
+        bodies = json.load(data_file)["bodies"]
+    if {body["name"] for body in bodies} != {"Sun", "Moon"}:
+        raise ValueError("The solar body catalog must contain the Sun and Moon")
+    for body in bodies:
+        if set(body["facts"]) != set(FACT_KEYS):
+            raise ValueError(f"{body['name']} does not have the canonical fact fields")
+    return bodies
 
 
 def _configure_java_home() -> None:
@@ -193,34 +206,49 @@ class MeterlessClient:
 class ScoutIntentRouter:
     """Small deterministic intent gate patterned after Scout's Sense/Route stages."""
 
-    def __init__(self, planets: list[dict[str, Any]]) -> None:
-        self.names = [planet["name"] for planet in planets]
+    def __init__(self, planets: list[dict[str, Any]], solar_bodies: list[dict[str, Any]] | None = None) -> None:
+        self.planet_names = [planet["name"] for planet in planets]
+        self.names = self.planet_names + [body["name"] for body in solar_bodies or []]
 
     def route(self, question: str) -> dict[str, Any]:
         lowered = question.casefold()
         matches = [name for name in self.names if re.search(rf"\b{re.escape(name.casefold())}\b", lowered)]
+        if "Sun" in matches and len(matches) > 1 and "from the sun" in lowered:
+            matches.remove("Sun")
         asks_all = bool(re.search(r"\b(all|every|each)\s+(the\s+)?planets?\b", lowered))
         asks_facts = any(term in lowered for term in ("fact", "facts", "tell me about", "details"))
         if asks_all and asks_facts:
-            return {"intent": "all_planet_facts", "planets": self.names}
+            return {"intent": "all_planet_facts", "planets": self.planet_names}
         if len(matches) > 1:
             return {"intent": "compare_planets", "planets": matches}
         if matches:
             return {"intent": "planet_facts", "planets": matches}
         if asks_all or "which planets" in lowered or lowered.strip() in {"planets", "list planets"}:
-            return {"intent": "list_planets", "planets": self.names}
+            return {"intent": "list_planets", "planets": self.planet_names}
         return {"intent": "clarify", "planets": []}
 
 
 class PlanetariumAgent:
-    def __init__(self, planets: list[dict[str, Any]] | None = None, zetaris: Any = None, meterless: Any = None) -> None:
+    def __init__(
+        self,
+        planets: list[dict[str, Any]] | None = None,
+        zetaris: Any = None,
+        meterless: Any = None,
+        solar_bodies: list[dict[str, Any]] | None = None,
+    ) -> None:
         self.planets = planets if planets is not None else load_planets()
-        self.local_by_name = {planet["name"].casefold(): planet for planet in self.planets}
-        self.router = ScoutIntentRouter(self.planets)
+        self.solar_bodies = solar_bodies if solar_bodies is not None else load_solar_bodies()
+        self.local_by_name = {
+            item["name"].casefold(): item for item in self.planets + self.solar_bodies
+        }
+        self.planet_names = {planet["name"].casefold() for planet in self.planets}
+        self.router = ScoutIntentRouter(self.planets, self.solar_bodies)
         self.zetaris = zetaris if zetaris is not None else ZetarisClient()
         self.meterless = meterless if meterless is not None else MeterlessClient()
 
     def _get_planet(self, name: str) -> dict[str, Any]:
+        if name.casefold() not in self.planet_names:
+            return self.local_by_name[name.casefold()]
         try:
             stored = self.zetaris.get_planet(name)
         except Exception as error:
@@ -240,9 +268,9 @@ class PlanetariumAgent:
     def answer(self, question: str) -> str:
         route = self.router.route(question)
         if route["intent"] == "clarify":
-            return "Ask about a planet by name, compare two planets, or request facts about all eight."
+            return "Ask about a planet, the Sun, or the Moon; compare planets; or request facts about all eight planets."
         if route["intent"] == "list_planets":
-            return "The eight planets, from the Sun outward: " + ", ".join(self.router.names) + "."
+            return "The eight planets, from the Sun outward: " + ", ".join(self.router.planet_names) + "."
 
         records = [self._get_planet(name) for name in route["planets"]]
         if route["intent"] == "all_planet_facts":
@@ -252,7 +280,12 @@ class PlanetariumAgent:
         else:
             lowered = question.casefold()
             selected_field = next(
-                (field for field, terms in FIELD_TERMS.items() if any(term in lowered for term in terms)),
+                (
+                    field
+                    for field, terms in FIELD_TERMS.items()
+                    if not (records[0]["name"] == "Moon" and field == "known_moons")
+                    and any(term in lowered for term in terms)
+                ),
                 None,
             )
             grounded = self._format_planet(records[0], selected_field)
@@ -261,13 +294,76 @@ class PlanetariumAgent:
         return generated or grounded
 
 
+def run_web(agent: PlanetariumAgent, host: str, port: int) -> None:
+    class PlanetariumHandler(BaseHTTPRequestHandler):
+        def _send_json(self, status: int, payload: dict[str, Any]) -> None:
+            body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+
+        def do_GET(self) -> None:
+            if self.path == "/":
+                body = (ROOT / "index.html").read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+                return
+            if self.path == "/api/catalog":
+                self._send_json(200, {"bodies": agent.planets + agent.solar_bodies})
+                return
+            self.send_error(404, "Not found")
+
+        def do_POST(self) -> None:
+            if self.path != "/api/ask":
+                self.send_error(404, "Not found")
+                return
+            try:
+                length = int(self.headers.get("Content-Length", "0"))
+                if length <= 0 or length > 16_384:
+                    self.send_error(400, "Request must contain a question under 16 KB")
+                    return
+                payload = json.loads(self.rfile.read(length).decode("utf-8"))
+                question = payload.get("question") if isinstance(payload, dict) else None
+                if not isinstance(question, str) or not question.strip() or len(question) > 1000:
+                    self.send_error(400, "Question must be a non-empty string under 1,000 characters")
+                    return
+            except (UnicodeDecodeError, json.JSONDecodeError, ValueError):
+                self.send_error(400, "Request body must be valid JSON")
+                return
+            self._send_json(200, {"answer": agent.answer(question.strip())})
+
+        def log_message(self, format: str, *args: Any) -> None:
+            print(f"{self.address_string()} - {format % args}", file=sys.stderr)
+
+    server = ThreadingHTTPServer((host, port), PlanetariumHandler)
+    print(f"Planetarium is ready at http://{host}:{port} (press Ctrl+C to stop)")
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\nPlanetarium server stopped.")
+    finally:
+        server.server_close()
+
+
 def main() -> None:
     import argparse
 
     parser = argparse.ArgumentParser(description="A fact-grounded solar-system guide for planetarium visitors.")
     parser.add_argument("--ask", help="Ask one question, for example: 'Tell me about Jupiter'")
+    parser.add_argument("--web", action="store_true", help="Run the planetarium website and question API")
+    parser.add_argument("--host", default="127.0.0.1", help="Web server host (default: 127.0.0.1)")
+    parser.add_argument("--port", type=int, default=8000, help="Web server port (default: 8000)")
     args = parser.parse_args()
     agent = PlanetariumAgent()
+    if args.web:
+        run_web(agent, args.host, args.port)
+        return
     if args.ask:
         print(agent.answer(args.ask))
         return
