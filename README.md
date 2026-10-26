@@ -20,6 +20,10 @@ Open `http://127.0.0.1:8000` to explore the planetarium. The web server binds to
 python planetarium.py
 ```
 
+## Deploy to Vercel
+
+Import this repository into Vercel with the project root as the Root Directory. Vercel detects `app.py` as the Python ASGI entrypoint and serves the same interface and question API. No custom build command or entrypoint setting is needed. The bundled fact catalogs work without environment variables; Zetaris and Meterless remain optional.
+
 Example command-line questions:
 
 ```powershell

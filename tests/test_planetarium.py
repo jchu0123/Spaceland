@@ -1,5 +1,7 @@
+import json
 import unittest
 
+from app import app
 from planetarium import FACT_KEYS, PlanetariumAgent, ScoutIntentRouter, load_planets, load_solar_bodies
 
 
@@ -69,6 +71,48 @@ class PlanetCatalogTests(unittest.TestCase):
     def test_unknown_question_asks_for_planetarium_scope(self):
         agent = PlanetariumAgent(zetaris=OfflineDatabase(), meterless=OfflineModel())
         self.assertIn("Ask about a planet", agent.answer("Tell me a joke"))
+
+
+class VercelEntrypointTests(unittest.IsolatedAsyncioTestCase):
+    async def request(self, method, path, body=b""):
+        events = [{"type": "http.request", "body": body, "more_body": False}]
+        responses = []
+
+        async def receive():
+            return events.pop(0)
+
+        async def send(message):
+            responses.append(message)
+
+        await app(
+            {"type": "http", "method": method, "path": path},
+            receive,
+            send,
+        )
+        status = responses[0]["status"]
+        response_body = responses[1]["body"]
+        return status, response_body
+
+    async def test_homepage_and_catalog_routes(self):
+        status, body = await self.request("GET", "/")
+        self.assertEqual(status, 200)
+        self.assertIn(b"Welcome, curious explorer", body)
+
+        status, body = await self.request("GET", "/api/catalog")
+        self.assertEqual(status, 200)
+        self.assertEqual(len(json.loads(body)["bodies"]), 10)
+
+    async def test_question_route_and_invalid_request(self):
+        status, body = await self.request(
+            "POST",
+            "/api/ask",
+            json.dumps({"question": "Tell me about the Sun"}).encode("utf-8"),
+        )
+        self.assertEqual(status, 200)
+        self.assertIn("Notable fact", json.loads(body)["answer"])
+
+        status, _ = await self.request("POST", "/api/ask", b"not json")
+        self.assertEqual(status, 400)
 
 
 if __name__ == "__main__":
